@@ -1,5 +1,4 @@
 import { Button, Grid, Paper, Typography } from '@mui/material';
-import { fontWeight } from '@mui/system';
 import React from 'react';
 import BookingModal from '../BookingModal/BookingModal';
 
