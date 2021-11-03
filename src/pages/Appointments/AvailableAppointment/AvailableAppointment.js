@@ -42,7 +42,6 @@ const bookings = [
 ]
 
 const AvailableAppointment = ({ date }) => {
-
     return (
         <Container>
             <Typography variant='h4' sx={{ color: '#5CE7ED', mb: 3 }}> available appointment on : {date.toDateString()}</Typography>
@@ -50,6 +49,7 @@ const AvailableAppointment = ({ date }) => {
                 {
                     bookings.map(booking => <Booking
                         key={booking.id}
+                        date={date}
                         booking={booking}
                     ></Booking>)
                 }
