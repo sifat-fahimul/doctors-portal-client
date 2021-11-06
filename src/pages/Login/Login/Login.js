@@ -3,9 +3,10 @@ import React, { useState } from 'react';
 import { NavLink, useLocation, useHistory } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 import login from '../../../images/login.png'
+
 const Login = () => {
     const [loginData, setLoginData] = useState({});
-    const { user, loginUser, isLoading, authError } = useAuth()
+    const { user, loginUser, signInWithGoogle, isLoading, authError } = useAuth()
 
     const location = useLocation();
     const history = useHistory();
@@ -22,6 +23,10 @@ const Login = () => {
         e.preventDefault();
         loginUser(loginData.email, loginData.password, location, history);
     }
+    const handleGoogleSignIn = () => {
+        signInWithGoogle(location, history)
+        history.push(location?.state?.from)
+    }
     return (
         <Container>
             {!isLoading && <Grid sx={{ my: 5, py: 5 }} container spacing={2}>
@@ -33,7 +38,7 @@ const Login = () => {
 
                             label='Your Email'
                             name='email'
-                            onChange={handleOnChange}
+                            onBlur={handleOnChange}
                             variant='standard'></TextField>
                         <TextField
                             sx={{ width: '75%', m: 1 }}
@@ -41,7 +46,7 @@ const Login = () => {
                             label='Your Password'
                             type='password'
                             name='password'
-                            onChange={handleOnChange}
+                            onBlur={handleOnChange}
                             variant='standard'></TextField>
 
 
@@ -53,6 +58,8 @@ const Login = () => {
                             <Button variant='text'>New User ? Please Register </Button>
                         </NavLink>
                     </form>
+                    <p>--------------------------</p>
+                    <Button onClick={handleGoogleSignIn} variant='contained'>Google Sign In </Button>
                     {user?.email && <Alert severity='success'>Login Successful</Alert>}
                     {authError && <Alert severity='error'>{authError}</Alert>}
                 </Grid>

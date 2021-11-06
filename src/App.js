@@ -10,6 +10,7 @@ import Login from './pages/Login/Login/Login';
 import Register from './pages/Login/Register/Register';
 import AuthProvider from './contexts/AuthProvider/AuthProvider';
 import PrivetRoute from './pages/Login/PrivetRoute/PrivetRoute';
+import Dashboard from './pages/Dashboard/Dashboard/Dashboard';
 
 
 function App() {
@@ -20,6 +21,9 @@ function App() {
           <Switch>
             <PrivetRoute path="/appointment">
               <Appointment></Appointment>
+            </PrivetRoute>
+            <PrivetRoute path="/dashboard">
+              <Dashboard></Dashboard>
             </PrivetRoute>
             <Route path="/home">
               <Home />

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import initializeFirebase from "../pages/Login/Firebase/firebase.init";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, updateProfile, signOut } from "firebase/auth";
 
 
 
@@ -12,14 +12,26 @@ const useFirebase = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [authError, setAuthError] = useState('');
 
+    const googleProvider = new GoogleAuthProvider();
+
+
     const auth = getAuth();
 
-    const registerUser = (email, password) => {
+    const registerUser = (email, password, name, history) => {
         setIsLoading(true)
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // const user = userCredential.user;
                 setAuthError('')
+                const newUser = { email, displayName: name }
+                setUser(newUser)
+                //send name to firebase after creation
+                updateProfile(auth.currentUser, {
+                    displayName: name,
+                }).then(() => {
+                }).catch((error) => {
+                });
+                history.replace('/')
             })
             .catch((error) => {
                 // const errorCode = error.code;
@@ -46,6 +58,21 @@ const useFirebase = () => {
             .finally(() => setIsLoading(false));
 
     }
+
+    const signInWithGoogle = (location, history) => {
+        // isLoading(true)
+        signInWithPopup(auth, googleProvider)
+            .then((result) => {
+                const user = result.user;
+                setAuthError('')
+
+            }).catch((error) => {
+                setAuthError(error.message); setAuthError(error.message);
+            }).finally(() => setIsLoading(false));
+    }
+
+
+
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -77,6 +104,7 @@ const useFirebase = () => {
         authError,
         registerUser,
         loginUser,
+        signInWithGoogle,
         logout,
     }
 }
