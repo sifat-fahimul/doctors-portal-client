@@ -29,9 +29,11 @@ const Navigation = () => {
                     <Link style={{ textDecoration: 'none', color: 'white' }} to='/appointment'>
                         <Button color="inherit">Appointment</Button>
                     </Link>
+
                     {
                         user?.email ?
                             <Box>
+
                                 <Link style={{ textDecoration: 'none', color: 'white' }} to='/dashboard'>
                                     <Button color="inherit">Dashboard</Button>
                                 </Link>
@@ -43,6 +45,8 @@ const Navigation = () => {
                                 <Button color="inherit">Login</Button>
                             </Link>
                     }
+
+                    {user?.email && <Typography variant="h6"> Hello : {user.displayName}</Typography>}
                 </Toolbar>
             </AppBar>
         </Box>
