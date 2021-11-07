@@ -15,7 +15,7 @@ const Appointments = ({ date }) => {
     console.log(appointments);
 
     useEffect(() => {
-        const url = `https://immense-chamber-79953.herokuapp.com/appointments/?email=${user.email}&date=${date}`
+        const url = `https://immense-chamber-79953.herokuapp.com/appointments/?email=${user.email}&date=${date.toLocaleDateString()}`
         fetch(url, {
             headers: {
                 'authorization': `Bearer ${token}`
