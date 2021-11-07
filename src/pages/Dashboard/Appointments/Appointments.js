@@ -12,7 +12,6 @@ import { Container } from '@mui/material';
 const Appointments = ({ date }) => {
     const { user, token } = useAuth();
     const [appointments, setAppointments] = useState([]);
-    console.log(appointments);
 
     useEffect(() => {
         const url = `https://immense-chamber-79953.herokuapp.com/appointments/?email=${user.email}&date=${date.toLocaleDateString()}`
@@ -23,7 +22,7 @@ const Appointments = ({ date }) => {
         })
             .then(res => res.json())
             .then(data => setAppointments(data))
-    }, [date])
+    }, [date, token, user.email])
     return (
         <div>
             <h2>Appointments : {appointments.length}</h2>
