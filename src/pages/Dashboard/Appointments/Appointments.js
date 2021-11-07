@@ -10,12 +10,17 @@ import Paper from '@mui/material/Paper';
 import { Container } from '@mui/material';
 
 const Appointments = ({ date }) => {
-    const { user } = useAuth();
+    const { user, token } = useAuth();
     const [appointments, setAppointments] = useState([]);
+    console.log(appointments);
 
     useEffect(() => {
-        const url = `http://localhost:5000/appointments/?email=${user.email}&date=${date}`
-        fetch(url)
+        const url = `https://immense-chamber-79953.herokuapp.com/appointments/?email=${user.email}&date=${date}`
+        fetch(url, {
+            headers: {
+                'authorization': `Bearer ${token}`
+            }
+        })
             .then(res => res.json())
             .then(data => setAppointments(data))
     }, [date])
